@@ -1,4 +1,4 @@
-export default function LangTag(props) {
+export default function LangTag(props : any) {
 
     const { color, language } = props;
 

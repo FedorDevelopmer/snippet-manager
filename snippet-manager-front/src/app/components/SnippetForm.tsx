@@ -7,7 +7,7 @@ export default function SnippetForm() {
 
     return (
         <div>
-            <ReactModal style={{"width":"50%", "height":"50%"}} isOpen={isOpen}>
+            <ReactModal isOpen={isOpen}>
                 <p>Test how it works</p>
                 <button onClick={() => setIsOpen(false)}>Close</button>
             </ReactModal>

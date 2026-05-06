@@ -1,5 +1,5 @@
 
-export default function LangTagListItem(props) {
+export default function LangTagListItem(props : any) {
 
     const { color, language, onClick } = props;
 
