@@ -1,0 +1,25 @@
+section{
+    padding: 2rem;
+}
+
+.edit-page-header {
+    font-size: x-large;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.edit-page {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    max-width: 90vw;
+    text-align: start;
+    gap: 1rem;
+}
+
+.footer-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 1rem;
+}

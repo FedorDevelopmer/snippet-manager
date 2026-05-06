@@ -1,0 +1,33 @@
+.lang-tag-main {
+    display: inline-flex;
+    padding: 0.4em 1em;
+    border-radius: 50%;
+    color: white;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    box-shadow: none;
+    border-radius: 50px;
+}
+
+.lang-tag-edit {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4em 1em;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    box-shadow: none;
+    gap: 1rem;
+}
+
+.tag-input {
+    width: 24px;
+    height: 15px;
+    border: none;
+    box-shadow: none;
+    border-radius: 40px;
+}
+

@@ -1,0 +1,137 @@
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+main {
+    flex: 1;
+}
+
+.snippet-header {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 5px #0d6efd;
+    padding: 3em 3em 3em 3em;
+
+}
+
+.application-label {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+
+.snippet-info {
+    display: flex;
+    min-width: 70vw;
+    max-width: 70vw;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em 0 1em 0;
+}
+
+.snippet-code-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    min-width: 70vw;
+    max-width: 90vw;
+    justify-content: center;
+}
+
+.snippet-code {
+    text-align: left;
+    min-height: inherit;
+    height: inherit;
+    min-width: inherit;
+    max-width: inherit;
+
+    position: relative;
+
+    .copy-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    .copy-btn::hover {
+        visibility: hidden;
+    }
+}
+
+.highlighter {
+    padding: 2vw !important;
+    min-height: 50vh;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.snippet-view-group1 {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.snippet-view-group2 {
+    display: flex;
+    gap: 20px;
+}
+
+.snippet-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -2px -2px 5px #0d6efd;
+    padding: 2em 2em 2em 2em;
+}
+
+.snippet-date-container {
+    display: flex;
+}
+
+.snippet-date {
+    padding: 0em 0 1em 0;
+}
+
+.delete-modal {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 600px;
+    max-width: 90vw;
+    height: 200px;
+    border: 1px solid rgb(204, 204, 204);
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    margin: auto 0;
+}
+
+.delete-modal-overlay {
+    position: fixed;
+    inset: 0px;
+    background-color: rgba(255, 255, 255, 0.75);
+    z-index: 1100;
+}

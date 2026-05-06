@@ -1,0 +1,148 @@
+.root-element {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.side-menu {
+    box-shadow: 3px 2px 12px -10px black;
+}
+
+.main-menu {
+    max-height: 75vh;
+    padding: 5vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2vh;
+    padding: 2vh;
+    overflow-y: scroll;
+}
+
+.add-button {
+    font-size: x-large;
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    color: #0d6efd;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+.language-selector {
+    position: relative;
+    width: 200px;
+}
+
+.selector-button {
+    border: 1px solid #ccc;
+    padding: 4px 0 4px 0; 
+    cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100%;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 10vh;
+    overflow-y: auto;
+}
+
+.dropdown div {
+    padding: 6px;
+    cursor: pointer;
+}
+
+.dropdown div:hover {
+    background: #f5f5f5;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #0d6efd;
+    margin: 1vh 2vh 2vh 2vh;
+    padding: 0vh 0vh 0vh 2vh;
+
+    input {
+        width: 90%;
+        height: 80%;
+        border: none;
+        box-shadow: none;
+        margin-right: 2vh;
+        margin-left: 1vh;
+
+
+    }
+
+    input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+.modal {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 600px;
+    max-width: 90vw;
+    height: 600px;
+    border: 1px solid rgb(204, 204, 204);
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    margin: auto 0;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0px;
+    background-color: rgba(255, 255, 255, 0.75);
+    z-index: 1100;
+}
+
+.textArea {
+    height: 200px;
+}
+
+.pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.page-size-selection{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tags-list {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 1rem 2rem;
+}
+
+.tag-select {
+    display: inline-flex;
+    gap: 10px;
+}
