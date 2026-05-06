@@ -14,23 +14,26 @@ jobs:
           java-version: "17"
 
       - name: Run tests
-      - run: cd backend & ./mvnw test
+        working-directory: snippet-manager-back
+        run: ./mvnw test
 
       - name: Backend build
-      - run: ./mvnw clean install
+        working-directory: snippet-manager-back
+        run: ./mvnw clean install
 
   build-frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
       - name: Prepare deps
-      - run: npm install
+        working-directory: snippet-manager-front
+        run: npm install
 
       - name: Frontend build
-      - run: npm run build
+        working-directory: snippet-manager-front
+        run: npm run build
