@@ -8,7 +8,7 @@ section{
     color: #0d6efd;
 }
 
-.edit-page {
+.edit-page-form {
     display: flex;
     flex-direction: column;
     width: 700px;
@@ -22,4 +22,18 @@ section{
     flex-direction: row;
     justify-content: end;
     gap: 1rem;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-page {
+    padding: 0;
 }

@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ValidationSchema } from "../../validation/InputValidationSchema";
 import { useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 export default function SnippetEditView() {
 
@@ -22,6 +23,7 @@ export default function SnippetEditView() {
         code: '',
         language: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     const { snippetId } = useParams();
 
@@ -71,6 +73,7 @@ export default function SnippetEditView() {
 
 
     function handleUpdateSnippet(data: any) {
+        setIsLoading(true);
         const payload = {
             id: snippet.id,
             title: data.title,
@@ -79,9 +82,12 @@ export default function SnippetEditView() {
         };
 
         updateSnippet(payload).then((response) => {
+
             if (response.status === 200) {
                 toSnippetPage();
             }
+        }, () => {
+            setIsLoading(false);
         });
     }
 
@@ -93,42 +99,50 @@ export default function SnippetEditView() {
     return (
         <>
             <Toaster />
-            <section>
-                <h2 className="edit-page-header">Edit your snippet</h2>
-                <form className="edit-page" onSubmit={handleSubmit(handleUpdateSnippet)}>
-                    <label htmlFor="title">Title:</label>
-                    <input id="title"  {...register("title")}></input>
-                    {errors.title && <label className="error">{errors.title.message}</label>}
-                    <label htmlFor="code">Code:</label>
-                    <textarea id="code"  {...register("code")}></textarea>
-                    {errors.code && <label className="error">{errors.code.message}</label>}
-                    <label htmlFor="language">Language:</label>
-                    <div id="language" className="language-selector">
-                        <div
-                            className="selector-button"
-                            onClick={() => setIsOpen(prev => !prev)}
-                        >
-                            {selected ? <LangTagListItem color={selected?.color} language={selected?.language} /> : "Select language"}
-                        </div>
-                        {isOpen && (
-                            <div className="dropdown">
-                                {tags.map(tag => (
-                                    <LangTagListItem key={tag.id} color={tag?.color} language={tag?.language} onClick={() => {
-                                        setSelected(tag)
-                                        setIsOpen(!isOpen)
-                                        setSnippet((prev) => ({ ...prev, language: tag.language }));
-                                    }} />
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                    <div className="footer-buttons">
-                        <Button variant="primary" type="submit">Save</Button>
-                        <Button variant="danger" type="button" onClick={toSnippetPage}>Discard</Button>
-                    </div>
-                </form>
 
-            </section>
+            <section className="edit-page">
+                <LoadingOverlay
+                    className="overlay"
+                    active={isLoading}
+                    spinner
+                    text='Saving changes...'
+                >
+                    <h2 className="edit-page-header">Edit your snippet</h2>
+                    <form className="edit-page-form" onSubmit={handleSubmit(handleUpdateSnippet)}>
+                        <label htmlFor="title">Title:</label>
+                        <input id="title"  {...register("title")}></input>
+                        {errors.title && <label className="error">{errors.title.message}</label>}
+                        <label htmlFor="code">Code:</label>
+                        <textarea id="code"  {...register("code")}></textarea>
+                        {errors.code && <label className="error">{errors.code.message}</label>}
+                        <label htmlFor="language">Language:</label>
+                        <div id="language" className="language-selector">
+                            <div
+                                className="selector-button"
+                                onClick={() => setIsOpen(prev => !prev)}
+                            >
+                                {selected ? <LangTagListItem color={selected?.color} language={selected?.language} /> : "Select language"}
+                            </div>
+                            {isOpen && (
+                                <div className="dropdown">
+                                    {tags.map(tag => (
+                                        <LangTagListItem key={tag.id} color={tag?.color} language={tag?.language} onClick={() => {
+                                            setSelected(tag)
+                                            setIsOpen(!isOpen)
+                                            setSnippet((prev) => ({ ...prev, language: tag.language }));
+                                        }} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div className="footer-buttons">
+                            <Button variant="primary" type="submit">Save</Button>
+                            <Button variant="danger" type="button" onClick={toSnippetPage}>Discard</Button>
+                        </div>
+                    </form>
+                </LoadingOverlay >
+            </section >
+
         </>
     );
 }
