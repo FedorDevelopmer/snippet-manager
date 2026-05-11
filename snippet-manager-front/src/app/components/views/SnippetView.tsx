@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import type { SnippetEntity } from "../../model/snippet";
 import LangTag from "../tags/LangTag";
 import DeleteSnippetModal from "../modals/DeleteSnippetModal";
+import { Toaster } from "react-hot-toast";
 
 export default function SnippetView() {
 
@@ -30,6 +31,7 @@ export default function SnippetView() {
     }
 
     useEffect(() => {
+
         if (snippetId) {
             getSnippetById(snippetId).then(response => {
                 if (response.data) {
@@ -46,6 +48,7 @@ export default function SnippetView() {
 
     return (
         <>
+            <Toaster />
             <header className="snippet-header">
                 <label className="application-label">Snippet Manager</label>
                 <Button variant="primary" onClick={toMainPage}>Back to list</Button>
@@ -59,7 +62,7 @@ export default function SnippetView() {
                     </div>
                     <div className="snippet-view-group2">
                         <Button variant="primary" onClick={toEditView}>Edit</Button>
-                        <Button variant="danger" onClick={()=> setShowModal(true)}>Delete</Button>
+                        <Button variant="danger" onClick={() => setShowModal(true)}>Delete</Button>
                     </div>
                 </section>
                 <section className="snippet-code-container">

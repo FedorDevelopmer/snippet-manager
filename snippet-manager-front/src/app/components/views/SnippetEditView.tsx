@@ -7,6 +7,10 @@ import { getSnippetById, updateSnippet } from "../../api/snippets-api";
 import type { SnippetEntity } from "../../model/snippet";
 import "../../../styles/editPage.css";
 import { Button } from "react-bootstrap";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ValidationSchema } from "../../validation/InputValidationSchema";
+import { useForm } from "react-hook-form";
+import { Toaster } from "react-hot-toast";
 
 export default function SnippetEditView() {
 
@@ -23,6 +27,13 @@ export default function SnippetEditView() {
 
     const navigate = useNavigate();
 
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm({ resolver: zodResolver(ValidationSchema), });
+
     useEffect(() => {
         if (snippetId) {
             getSnippetById(snippetId).then((response) => {
@@ -36,7 +47,17 @@ export default function SnippetEditView() {
                 setTags(response.data.content);
             }
         })
+
     }, []);
+
+    useEffect(() => {
+        if (snippet) {
+            reset({
+                title: snippet.title,
+                code: snippet.code
+            });
+        }
+    }, [snippet, reset])
 
     useEffect(() => {
         if (snippet?.language) {
@@ -48,22 +69,20 @@ export default function SnippetEditView() {
         }
     }, [snippet.language]);
 
-    function onValueChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const { name, value } = e.target;
-        setSnippet(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
 
-    function handleUpdateSnippet(event: any) {
-        event.preventDefault();
-        console.log(snippet)
-        updateSnippet(snippet).then((response) => {
-            if (response.status == 200) {
+    function handleUpdateSnippet(data: any) {
+        const payload = {
+            id: snippet.id,
+            title: data.title,
+            code: data.code,
+            language: selected ? selected.language : snippet.language
+        };
+
+        updateSnippet(payload).then((response) => {
+            if (response.status === 200) {
                 toSnippetPage();
             }
-        })
+        });
     }
 
     function toSnippetPage() {
@@ -73,13 +92,16 @@ export default function SnippetEditView() {
 
     return (
         <>
+            <Toaster />
             <section>
                 <h2 className="edit-page-header">Edit your snippet</h2>
-                <form className="edit-page" onSubmit={handleUpdateSnippet}>
+                <form className="edit-page" onSubmit={handleSubmit(handleUpdateSnippet)}>
                     <label htmlFor="title">Title:</label>
-                    <input id="title" name="title" value={snippet?.title} onChange={onValueChange}></input>
+                    <input id="title"  {...register("title")}></input>
+                    {errors.title && <label className="error">{errors.title.message}</label>}
                     <label htmlFor="code">Code:</label>
-                    <textarea id="code" name="code" value={snippet?.code} onChange={onValueChange}></textarea>
+                    <textarea id="code"  {...register("code")}></textarea>
+                    {errors.code && <label className="error">{errors.code.message}</label>}
                     <label htmlFor="language">Language:</label>
                     <div id="language" className="language-selector">
                         <div
@@ -94,7 +116,7 @@ export default function SnippetEditView() {
                                     <LangTagListItem key={tag.id} color={tag?.color} language={tag?.language} onClick={() => {
                                         setSelected(tag)
                                         setIsOpen(!isOpen)
-                                        setSnippet((prev) => ({ ...prev, language: tag.language}));
+                                        setSnippet((prev) => ({ ...prev, language: tag.language }));
                                     }} />
                                 ))}
                             </div>
@@ -102,7 +124,7 @@ export default function SnippetEditView() {
                     </div>
                     <div className="footer-buttons">
                         <Button variant="primary" type="submit">Save</Button>
-                        <Button variant="danger" onClick={toSnippetPage}>Discard</Button>
+                        <Button variant="danger" type="button" onClick={toSnippetPage}>Discard</Button>
                     </div>
                 </form>
 

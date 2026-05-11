@@ -7,6 +7,10 @@ import { getTags } from "../api/language-tags-api";
 import LangTagListItem from "./tags/LangTagListItem";
 import type { LangTagEntity } from "../model/tag";
 import ReactModal from "react-modal";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ValidationSchema } from "../validation/InputValidationSchema";
+import { Toaster } from "react-hot-toast";
 
 export default function AddButtonComponent(props: any) {
 
@@ -14,11 +18,12 @@ export default function AddButtonComponent(props: any) {
     const [tags, setTags] = useState<LangTagEntity[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<null | LangTagEntity>(null);
-    const [snippetValues, setSnippetValues] = useState<SnippetEntity>({
-        title: '',
-        code: '',
-        language: ''
-    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({ resolver: zodResolver(ValidationSchema), });
 
     const { onModalClose } = props;
 
@@ -28,16 +33,7 @@ export default function AddButtonComponent(props: any) {
                 setTags(response.data.content);
             }
         });
-    }, [])
-
-
-    function onValueChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const { name, value } = e.target;
-        setSnippetValues(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
+    }, []);
 
     function hideModal() {
         setShowModal(false);
@@ -47,11 +43,10 @@ export default function AddButtonComponent(props: any) {
         setShowModal(true);
     }
 
-    function createSnippet(event: any) {
-        event.preventDefault();
+    function createSnippet(data: any) {
         let snippetEntity: SnippetEntity = {
-            title: snippetValues.title,
-            code: snippetValues.code,
+            title: data.title,
+            code: data.code,
             language: selected?.language ? selected.language : 'Text',
         }
         addSnippet(snippetEntity).then(() => {
@@ -60,36 +55,34 @@ export default function AddButtonComponent(props: any) {
         }, () => {
             hideModal();
         })
-
     }
 
 
 
     return (
         <>
+            <Toaster />
             <Card style={{ width: '18rem' }}>
                 <Card.Body style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <Button variant="outline-primary" className="add-button" onClick={openModal}>+</Button>
                 </Card.Body>
             </Card>
-            <ReactModal className="modal" overlayClassName="modal-overlay" style={{ content: {}, overlay: {} }}isOpen={showModal} onRequestClose={() => setShowModal(false)}
+            <ReactModal className="modal" overlayClassName="modal-overlay" style={{ content: {}, overlay: {} }} isOpen={showModal} onRequestClose={() => setShowModal(false)}
                 shouldCloseOnOverlayClick={true}
                 shouldCloseOnEsc={true}>
                 <Modal.Header>
                     <Modal.Title>Create new code snippet</Modal.Title>
                     <CloseButton onClick={hideModal} />
                 </Modal.Header>
-                <form onSubmit={(e) => {
-                    setShowModal(false);
-                    createSnippet(e);
-                    onModalClose();
-                }}>
+                <form onSubmit={handleSubmit(createSnippet)}>
                     <Modal.Body>
                         <div className="modal-form">
                             <label htmlFor="title">Title</label>
-                            <input type="text" id="title" name="title" value={snippetValues.title} onChange={onValueChange}></input>
+                            <input type="text" id="title" {...register("title")}></input>
+                            {errors.title && <label className="error">{errors.title.message}</label>}
                             <label htmlFor="code">Code</label>
-                            <textarea id="code" name="code" className="textArea" value={snippetValues.code} onChange={onValueChange}></textarea>
+                            <textarea id="code" {...register("code")}></textarea>
+                            {errors.code && <label className="error">{errors.code.message}</label>}
                             <label htmlFor="lang">Language</label>
                             <div className="language-selector">
                                 <div
@@ -117,7 +110,7 @@ export default function AddButtonComponent(props: any) {
                         <Button variant="primary" type="submit">Create</Button>
                     </Modal.Footer>
                 </form>
-            </ReactModal>
+            </ReactModal >
         </>
     );
 }

@@ -33,9 +33,6 @@
     flex-direction: column;
 }
 
-
-
-
 .language-selector {
     position: relative;
     width: 200px;
@@ -145,4 +142,10 @@
 .tag-select {
     display: inline-flex;
     gap: 10px;
+}
+
+.error {
+    color: #993300;
+    font-weight: 200;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
 }

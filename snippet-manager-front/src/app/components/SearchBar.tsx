@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { LangTagEntity } from "../model/tag";
 import { getTags } from "../api/language-tags-api";
 import { Button } from "react-bootstrap";
+import { Toaster } from "react-hot-toast";
 
 type SearchBarProps = {
     tagList: Set<string>;
@@ -58,7 +59,7 @@ export default function SearchBar(props: SearchBarProps) {
     return (
 
         <>
-
+            <Toaster />
             <div className="tags-list">
                 <label>Filter by language tag</label>
                 {tags.map((tag) => (

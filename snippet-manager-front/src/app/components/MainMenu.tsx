@@ -9,6 +9,7 @@ import LangTag from "./tags/LangTag";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import type { Criteria } from "../model/criteria";
+import { Toaster } from "react-hot-toast";
 
 export default function MainMenu() {
 
@@ -34,8 +35,9 @@ export default function MainMenu() {
     );
 
     const navigate = useNavigate();
-
     useEffect(() => {
+
+
         getSnippets(0, pageSize, criteria).then(response => {
             if (response.data.content) {
                 setSnippets(response.data.content);
@@ -104,79 +106,82 @@ export default function MainMenu() {
 
     return (
         <>
-            <section className="side-menu">
-                <SearchBar
-                    tagList={tagList}
-                    setTagList={setTagList}
-                    codeText={codeText}
-                    setCodeText={setCodeText}
-                    titleText={titleText}
-                    setTitleText={setTitleText} />
-            </section>
-            <section>
-                <section className="page-size-selection">
-                    <label>Choose page size:</label>
-                    <ButtonGroup>
-                        <Button variant={pageSize == 7 ? "primary" : "outline-primary"}
-                            onClick={() => {
-                                setPageSize(7);
-                                setCurrentPage(0);
-                            }}>7</Button>
-                        <Button variant={pageSize == 15 ? "primary" : "outline-primary"}
-                            onClick={() => {
-                                setPageSize(15);
-                                setCurrentPage(0);
-                            }}>15</Button>
-                        <Button variant={pageSize == 31 ? "primary" : "outline-primary"}
-                            onClick={() => {
-                                setPageSize(31);
-                                setCurrentPage(0);
-                            }}>31</Button>
-                    </ButtonGroup>
+            <Toaster />
+            <div className="root-element">
+                <section className="side-menu">
+                    <SearchBar
+                        tagList={tagList}
+                        setTagList={setTagList}
+                        codeText={codeText}
+                        setCodeText={setCodeText}
+                        titleText={titleText}
+                        setTitleText={setTitleText} />
                 </section>
-                <section className="main-menu">
-                    <AddButtonComponent onModalClose={onModalClose} />
-                    {snippets.map((snippet, idx) => (
-                        <Card key={snippet.id} style={{ width: '18rem' }}>
-                            <Card.Body>
-                                <Card.Title>{snippet.title}</Card.Title>
+                <section>
+                    <section className="page-size-selection">
+                        <label>Choose page size:</label>
+                        <ButtonGroup>
+                            <Button variant={pageSize == 7 ? "primary" : "outline-primary"}
+                                onClick={() => {
+                                    setPageSize(7);
+                                    setCurrentPage(0);
+                                }}>7</Button>
+                            <Button variant={pageSize == 15 ? "primary" : "outline-primary"}
+                                onClick={() => {
+                                    setPageSize(15);
+                                    setCurrentPage(0);
+                                }}>15</Button>
+                            <Button variant={pageSize == 31 ? "primary" : "outline-primary"}
+                                onClick={() => {
+                                    setPageSize(31);
+                                    setCurrentPage(0);
+                                }}>31</Button>
+                        </ButtonGroup>
+                    </section>
+                    <section className="main-menu">
+                        <AddButtonComponent onModalClose={onModalClose} />
+                        {snippets.map((snippet, idx) => (
+                            <Card key={snippet.id} style={{ width: '18rem' }}>
                                 <Card.Body>
-                                    <LangTag key={idx} color={tags[idx] ? tags[idx].color : "#000000"} language={snippet.language} />
+                                    <Card.Title>{snippet.title}</Card.Title>
+                                    <Card.Body>
+                                        <LangTag key={idx} color={tags[idx] ? tags[idx].color : "#000000"} language={snippet.language} />
+                                    </Card.Body>
+                                    <Card.Text>
+                                        Issued at: {new Date(snippet?.creationDate ? snippet.creationDate : '').toUTCString()}
+                                    </Card.Text>
+                                    <Button variant="primary" onClick={() => {
+                                        navigate(`/snippet/${snippet.id}`);
+                                    }}>Open</Button>
                                 </Card.Body>
-                                <Card.Text>
-                                    Issued at: {new Date(snippet?.creationDate ? snippet.creationDate : '').toUTCString()}
-                                </Card.Text>
-                                <Button variant="primary" onClick={() => {
-                                    navigate(`/snippet/${snippet.id}`);
-                                }}>Open</Button>
-                            </Card.Body>
-                        </Card>
-                    ))}
+                            </Card>
+                        ))}
+                    </section>
+                    <section className="pagination">
+                        <Pagination>
+                            <Pagination.First disabled={currentPage == 0} onClick={() => { setCurrentPage(0) }}></Pagination.First>
+                            <Pagination.Prev disabled={currentPage == 0} onClick={() => { setCurrentPage(currentPage - 1) }}></Pagination.Prev>
+                            {(() => {
+                                const pageButtons = [];
+                                for (let i = 0; i < pagesCount; i++) {
+                                    pageButtons.push(
+                                        <Pagination.Item
+                                            active={currentPage == i}
+                                            onClick={() => {
+                                                setCurrentPage(i);
+                                            }}>
+                                            {i + 1}
+                                        </Pagination.Item>
+                                    );
+                                }
+                                return pageButtons;
+                            })()}
+                            <Pagination.Next disabled={currentPage == pagesCount - 1} onClick={() => { setCurrentPage(currentPage + 1) }}></Pagination.Next>
+                            <Pagination.Last disabled={currentPage == pagesCount - 1} onClick={() => { setCurrentPage(pagesCount - 1) }}></Pagination.Last>
+                        </Pagination>
+                    </section>
                 </section>
-                <section className="pagination">
-                    <Pagination>
-                        <Pagination.First disabled={currentPage == 0} onClick={() => { setCurrentPage(0) }}></Pagination.First>
-                        <Pagination.Prev disabled={currentPage == 0} onClick={() => { setCurrentPage(currentPage - 1) }}></Pagination.Prev>
-                        {(() => {
-                            const pageButtons = [];
-                            for (let i = 0; i < pagesCount; i++) {
-                                pageButtons.push(
-                                    <Pagination.Item
-                                        active={currentPage == i}
-                                        onClick={() => {
-                                            setCurrentPage(i);
-                                        }}>
-                                        {i + 1}
-                                    </Pagination.Item>
-                                );
-                            }
-                            return pageButtons;
-                        })()}
-                        <Pagination.Next disabled={currentPage == pagesCount - 1} onClick={() => { setCurrentPage(currentPage + 1) }}></Pagination.Next>
-                        <Pagination.Last disabled={currentPage == pagesCount - 1} onClick={() => { setCurrentPage(pagesCount - 1) }}></Pagination.Last>
-                    </Pagination>
-                </section>
-            </section>
+            </div>
         </>
 
     );
