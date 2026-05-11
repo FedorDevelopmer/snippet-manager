@@ -13,11 +13,11 @@ export default function OfflineViewComponent() {
 
     return (
         <>
-           {/* <Toaster />  */}
+            <Toaster />
             <section className="offlinePageLayout">
                 <img className="offlineImg" src={noConnection}></img>
                 <label className="offlineLabel">Unable to connect to application server. Please, try againg later.</label>
-                <Button variant="primary" onClick={()=> {navigate("/")}}>Try again</Button>
+                <Button variant="primary" onClick={onRetry}>Try again</Button>
             </section>
         </>
     );

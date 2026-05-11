@@ -1,8 +1,6 @@
 // components/AppInitGuard.tsx
 import { useEffect, useState } from 'react';
 import { tagsAPI } from '../api/global-api';
-import OfflineViewComponent from './views/OfflineView';
-import MainMenu from './MainMenu';
 import { useNavigate } from 'react-router';
 
 const AppLaunchGuard = () => {

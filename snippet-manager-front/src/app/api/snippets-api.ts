@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import { type AxiosResponse } from "axios";
 import type { SnippetEntity } from "../model/snippet";
 import type { Criteria } from "../model/criteria";
 import { snippetsAPI } from "./global-api";
