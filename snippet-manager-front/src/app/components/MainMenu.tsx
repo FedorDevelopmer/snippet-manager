@@ -103,7 +103,6 @@ export default function MainMenu() {
         } else {
             setCriteria(prev => ({ ...prev, code: null }))
         }
-        console.log(tagList.size);
         if (tagList.size != 0) {
             setCriteria(prev => ({ ...prev, tags: tagList }))
         } else {
@@ -115,38 +114,38 @@ export default function MainMenu() {
     return (
         <>
             <Toaster />
-            <div className="root-element">
-                <section className="side-menu">
-                    <SearchBar
-                        tagList={tagList}
-                        setTagList={setTagList}
-                        codeText={codeText}
-                        setCodeText={setCodeText}
-                        titleText={titleText}
-                        setTitleText={setTitleText} />
-                </section>
-                <LoadingOverlay
-                    className="overlay"
-                    active={isLoading}
-                    spinner
-                    text='Loading...'
-                >
-                    <section>
+            <LoadingOverlay
+                className="overlay"
+                active={isLoading}
+                spinner
+                text='Loading...'
+            >
+                <div className="root-element">
+                    <section className="side-menu">
+                        <SearchBar
+                            tagList={tagList}
+                            setTagList={setTagList}
+                            codeText={codeText}
+                            setCodeText={setCodeText}
+                            titleText={titleText}
+                            setTitleText={setTitleText} />
+                    </section>
 
+                    <section className="main-section">
                         <section className="page-size-selection">
                             <label>Choose page size:</label>
                             <ButtonGroup>
-                                <Button variant={pageSize == 7 ? "primary" : "outline-primary"}
+                                <Button variant={pageSize == 7 ? "warning" : "outline-warning"}
                                     onClick={() => {
                                         setPageSize(7);
                                         setCurrentPage(0);
                                     }}>7</Button>
-                                <Button variant={pageSize == 15 ? "primary" : "outline-primary"}
+                                <Button variant={pageSize == 15 ? "warning" : "outline-warning"}
                                     onClick={() => {
                                         setPageSize(15);
                                         setCurrentPage(0);
                                     }}>15</Button>
-                                <Button variant={pageSize == 31 ? "primary" : "outline-primary"}
+                                <Button variant={pageSize == 31 ? "warning" : "outline-warning"}
                                     onClick={() => {
                                         setPageSize(31);
                                         setCurrentPage(0);
@@ -156,7 +155,7 @@ export default function MainMenu() {
                         <section className="main-menu">
                             <AddButtonComponent onModalClose={onModalClose} />
                             {snippets.map((snippet, idx) => (
-                                <Card key={snippet.id} style={{ width: '18rem' }}>
+                                <Card className="custom-card" key={snippet.id}>
                                     <Card.Body>
                                         <Card.Title>{snippet.title}</Card.Title>
                                         <Card.Body>
@@ -165,7 +164,7 @@ export default function MainMenu() {
                                         <Card.Text>
                                             Issued at: {new Date(snippet?.creationDate ? snippet.creationDate : '').toUTCString()}
                                         </Card.Text>
-                                        <Button variant="primary" onClick={() => {
+                                        <Button variant="outline-warning" onClick={() => {
                                             navigate(`/snippet/${snippet.id}`);
                                         }}>Open</Button>
                                     </Card.Body>
@@ -173,12 +172,21 @@ export default function MainMenu() {
                             ))}
                         </section>
                         <section className="pagination">
-                            <Pagination>
-                                <Pagination.First disabled={currentPage == 0} onClick={() => { setCurrentPage(0) }}></Pagination.First>
-                                <Pagination.Prev disabled={currentPage == 0} onClick={() => { setCurrentPage(currentPage - 1) }}></Pagination.Prev>
+                            <Pagination >
+                                <Pagination.First disabled={currentPage <= 0} onClick={() => { setCurrentPage(0) }}></Pagination.First>
+                                <Pagination.Prev disabled={currentPage <= 0} onClick={() => { setCurrentPage(currentPage - 1) }}></Pagination.Prev>
                                 {(() => {
                                     const pageButtons = [];
-                                    for (let i = 0; i < pagesCount; i++) {
+                                    pageButtons.push(
+                                        <Pagination.Item
+                                            active={currentPage == 0}
+                                            onClick={() => {
+                                                setCurrentPage(0);
+                                            }}>
+                                            {1}
+                                        </Pagination.Item>
+                                    );
+                                    for (let i = 1; i < pagesCount; i++) {
                                         pageButtons.push(
                                             <Pagination.Item
                                                 active={currentPage == i}
@@ -191,14 +199,13 @@ export default function MainMenu() {
                                     }
                                     return pageButtons;
                                 })()}
-                                <Pagination.Next disabled={currentPage == pagesCount - 1} onClick={() => { setCurrentPage(currentPage + 1) }}></Pagination.Next>
-                                <Pagination.Last disabled={currentPage == pagesCount - 1} onClick={() => { setCurrentPage(pagesCount - 1) }}></Pagination.Last>
+                                <Pagination.Next disabled={currentPage >= pagesCount - 1} onClick={() => { setCurrentPage(currentPage + 1) }}></Pagination.Next>
+                                <Pagination.Last disabled={currentPage >= pagesCount - 1} onClick={() => { setCurrentPage(pagesCount - 1) }}></Pagination.Last>
                             </Pagination>
                         </section>
                     </section>
-                </LoadingOverlay>
-
-            </div >
+                </div >
+            </LoadingOverlay>
         </>
 
     );

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { LangTagEntity } from "../model/tag";
 import { getTags } from "../api/language-tags-api";
-import { Button } from "react-bootstrap";
 import { Toaster } from "react-hot-toast";
 
 type SearchBarProps = {
@@ -60,8 +59,8 @@ export default function SearchBar(props: SearchBarProps) {
 
         <>
             <Toaster />
+            <label>Filter by language tag</label>
             <div className="tags-list">
-                <label>Filter by language tag</label>
                 {tags.map((tag) => (
                     <div className="tag-select">
                         <input type="checkbox"
@@ -82,13 +81,12 @@ export default function SearchBar(props: SearchBarProps) {
                         <label htmlFor={tag.id}>{tag.language}</label>
                     </div>
                 ))}
-                <Button onClick={showMore} hidden={showed} variant="primary">Show more...</Button>
-                <Button onClick={showMore} hidden={!showed} variant="primary">Hide back</Button>
+                <span className="show-hide-label" onClick={showMore} hidden={showed} >Show more...</span>
+                <span className="show-hide-label" onClick={showMore} hidden={!showed} >Hide back</span>
             </div>
-            <label>Filter by title</label>
+            <label htmlFor="title">Filter by title</label>
             <div className="search-bar">
-
-                <input type="text"
+                <input id="title" type="text"
                     placeholder="Enter title"
                     value={titleText}
                     onChange={(e) => {
@@ -96,21 +94,17 @@ export default function SearchBar(props: SearchBarProps) {
 
                     }}>
                 </input>
-
             </div>
-            <label>Filter by code</label>
+            <label htmlFor="code">Filter by code</label>
             <div className="search-bar">
-
-                <input type="text"
+                <input id="code" type="text"
                     placeholder="Enter code"
                     value={codeText}
                     onChange={(e) => {
                         setCodeText(e.target.value)
                     }}>
                 </input>
-
             </div>
-
         </>
 
     )

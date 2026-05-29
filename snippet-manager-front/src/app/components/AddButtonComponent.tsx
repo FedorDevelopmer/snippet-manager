@@ -62,17 +62,15 @@ export default function AddButtonComponent(props: any) {
     return (
         <>
             <Toaster />
-            <Card style={{ width: '18rem' }}>
-                <Card.Body style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Button variant="outline-primary" className="add-button" onClick={openModal}>+</Button>
-                </Card.Body>
+            <Card style={{ background: "#553939" }}>
+                        <span className="add-button" onClick={openModal}>+</span>
             </Card>
             <ReactModal className="modal" overlayClassName="modal-overlay" style={{ content: {}, overlay: {} }} isOpen={showModal} onRequestClose={() => setShowModal(false)}
                 shouldCloseOnOverlayClick={true}
                 shouldCloseOnEsc={true}>
                 <Modal.Header>
                     <Modal.Title>Create new code snippet</Modal.Title>
-                    <CloseButton onClick={hideModal} />
+                    <CloseButton variant="white" onClick={hideModal} />
                 </Modal.Header>
                 <form onSubmit={handleSubmit(createSnippet)}>
                     <Modal.Body>
@@ -106,8 +104,8 @@ export default function AddButtonComponent(props: any) {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={hideModal}>Cancel</Button>
-                        <Button variant="primary" type="submit">Create</Button>
+                        <Button variant="outline-danger" onClick={hideModal}>Cancel</Button>
+                        <Button variant="outline-warning" type="submit">Create</Button>
                     </Modal.Footer>
                 </form>
             </ReactModal >

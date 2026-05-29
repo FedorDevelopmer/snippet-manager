@@ -6,7 +6,7 @@ export const ValidationSchema = zod.object({
         .max(100, "Snippet title shouln't be longer than 100 characters"),
     code: zod
         .string()
-        .min(20, "Code length must be at least 20 characters")
+        .min(10, "Code length must be at least 10 characters")
         .max(2000, "Code length should't be longer than 2000 characters")
     
 })

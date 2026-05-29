@@ -18,7 +18,7 @@ public class SnippetRequestTO {
     private UUID id;
 
     @NotEmpty
-    @Length(min = 20, max = 2000)
+    @Length(min = 10, max = 2000)
     private String code;
 
     @NotEmpty
