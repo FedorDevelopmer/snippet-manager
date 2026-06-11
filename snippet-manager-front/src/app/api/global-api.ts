@@ -4,11 +4,12 @@ import toast from "react-hot-toast"
 const tagsAPI = axios.create({ baseURL: "http://localhost:9091/api/v1/tags" });
 const snippetsAPI = axios.create({ baseURL: "http://localhost:9091/api/v1/snippets" });
 
+let connectionAborted = false;
+
 function handleErrors(error: any) {
-    console.log("Handle errors")
-    toast.error("No connection with a server. Check your internet connection");
-    if (!error.response) {
+    if (!error.response && !connectionAborted) {
         toast.error("No connection with a server. Check your internet connection");
+        connectionAborted = true;
     }
     if (error.response?.status === 500) {
         toast.error("A server error occured. Try again later.");
@@ -23,12 +24,18 @@ function handleErrors(error: any) {
 }
 
 tagsAPI.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        connectionAborted = false;
+        return response
+    },
     (error) => handleErrors(error)
 )
 
 snippetsAPI.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        connectionAborted = false;
+        return response
+    },
     (error) => handleErrors(error)
 )
 

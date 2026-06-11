@@ -11,6 +11,7 @@ import SearchBar from "./SearchBar";
 import type { Criteria } from "../model/criteria";
 import { Toaster } from "react-hot-toast";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { format } from "date-fns";
 
 export default function MainMenu() {
 
@@ -162,7 +163,7 @@ export default function MainMenu() {
                                             <LangTag key={idx} color={tags[idx] ? tags[idx].color : "#000000"} language={snippet.language} />
                                         </Card.Body>
                                         <Card.Text>
-                                            Issued at: {new Date(snippet?.creationDate ? snippet.creationDate : '').toUTCString()}
+                                           {format(new Date(snippet?.creationDate ? snippet.creationDate : 0), 'dd MMM, yyyy HH:mm:ss')}
                                         </Card.Text>
                                         <Button variant="outline-warning" onClick={() => {
                                             navigate(`/snippet/${snippet.id}`);
@@ -179,6 +180,7 @@ export default function MainMenu() {
                                     const pageButtons = [];
                                     pageButtons.push(
                                         <Pagination.Item
+                                            key={1}
                                             active={currentPage == 0}
                                             onClick={() => {
                                                 setCurrentPage(0);
@@ -189,6 +191,7 @@ export default function MainMenu() {
                                     for (let i = 1; i < pagesCount; i++) {
                                         pageButtons.push(
                                             <Pagination.Item
+                                                key={i + 1}
                                                 active={currentPage == i}
                                                 onClick={() => {
                                                     setCurrentPage(i);

@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
-import noConnection from '../../../assets/offline.svg';
 import { useNavigate } from "react-router";
 import { Toaster } from "react-hot-toast";
+import Offline from '../../../assets/offline.svg?react';
 
 export default function OfflineViewComponent() {
 
@@ -15,9 +15,9 @@ export default function OfflineViewComponent() {
         <>
             <Toaster />
             <section className="offlinePageLayout">
-                <img className="offlineImg" src={noConnection}></img>
+                <Offline className="offlineImg"></Offline>
                 <label className="offlineLabel">Unable to connect to application server. Please, try againg later.</label>
-                <Button variant="primary" onClick={onRetry}>Try again</Button>
+                <Button variant="outline-warning" onClick={onRetry}>Try again</Button>
             </section>
         </>
     );

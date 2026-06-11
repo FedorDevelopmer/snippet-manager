@@ -36,6 +36,10 @@ jobs:
       - name: Prepare deps
         working-directory: snippet-manager-front
         run: npm install
+        
+      - name: Frontend tests
+        working-directory: snippet-manager-front
+        run: npm run test
 
       - name: Frontend build
         working-directory: snippet-manager-front

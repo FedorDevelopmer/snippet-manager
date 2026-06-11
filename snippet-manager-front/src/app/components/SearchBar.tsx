@@ -61,8 +61,8 @@ export default function SearchBar(props: SearchBarProps) {
             <Toaster />
             <label>Filter by language tag</label>
             <div className="tags-list">
-                {tags.map((tag) => (
-                    <div className="tag-select">
+                {tags.map((tag, idx) => (
+                    <div className="tag-select" key={idx}>
                         <input type="checkbox"
                             id={tag.id}
                             name="subscribe"

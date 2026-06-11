@@ -8,7 +8,8 @@ body {
     margin: 0;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    color:
+    font-family: 'Nunito', sans-serif;
+    color: white;
 }
 
 
@@ -78,6 +79,7 @@ body {
     min-height: 50vh;
     max-height: 50vh;
     overflow-y: auto;
+    margin-bottom: 0;
 }
 
 .main-container {
@@ -88,15 +90,10 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #472D2D;
+    color: white;
 }
 
-.snippet-view-group1 {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.snippet-view-group2 {
+.snippet-view-group {
     display: flex;
     gap: 20px;
 }
@@ -115,34 +112,6 @@ body {
     display: flex;
 }
 
-.snippet-date {
-    padding: 0em 0 1em 0;
-}
-
-.delete-modal {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 600px;
-    max-width: 90vw;
-    height: 200px;
-    border: 1px solid rgb(204, 204, 204);
-    background: white;
-    padding: 20px;
-    border-radius: 4px;
-    margin: auto 0;
-}
-
-.delete-modal-overlay {
-    position: fixed;
-    inset: 0px;
-    background-color: rgba(255, 255, 255, 0.75);
-    z-index: 1100;
-}
-
 .snippet-top {
     height: 3rem;
     display: flex;
@@ -150,6 +119,19 @@ body {
     align-items: center;
     background: #553939;
     border-radius: 10px 10px 0 0;
+    padding: 0 1rem 0 1rem;
+}
+
+.snippet-bottom {
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #553939;
+    border-radius: 0 0 10px 10px;
+    font-weight: lighter;
+    font-size: normal;
+    padding: 0 1rem 0 1rem;
 }
 
 .edit-icon {
@@ -170,5 +152,4 @@ body {
     color: #ffc107;
     width: 2.5rem;
     height: 2.5rem;
-    margin-left: 1rem;
 }

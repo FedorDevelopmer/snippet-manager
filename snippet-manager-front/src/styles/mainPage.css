@@ -9,7 +9,7 @@
 
 .side-menu {
     margin: 1rem;
-    border: 3px solid #ffc107;
+    border: 2px solid #ffc107;
     border-radius: 15px;
     color: white;
 }
@@ -28,7 +28,9 @@
 }
 
 .add-button {
-    font-size: 8.5rem;
+    font-size: 7.5rem;
+    color: #704F4F;
+    cursor: pointer;
 }
 
 .modal-form {
@@ -77,6 +79,7 @@
     background-color: #553939;
 
 
+
     input {
         width: 90%;
         height: 80%;
@@ -95,59 +98,6 @@
     }
 }
 
-.modal {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    max-width: 90vw;
-    height: 600px;
-    color: white;
-    background-color: #472D2D;
-    padding: 20px;
-    border-radius: 4px;
-    margin: auto 0;
-
-    & .modal-body input {
-
-        border: none;
-        box-shadow: none;
-        background-color: #553939;
-        color: white;
-        padding: 0.5rem;
-        border-radius: 10px;
-
-        &:focus {
-            outline: none;
-            box-shadow: none;
-        }
-    }
-
-    & .modal-body textarea {
-
-        border: none;
-        box-shadow: none;
-        background-color: #553939;
-        color: white;
-        padding: 0.5rem;
-        border-radius: 10px;
-
-        &:focus {
-            outline: none;
-            box-shadow: none;
-        }
-    }
-
-}
-
-.modal-overlay {
-    position: fixed;
-    inset: 0px;
-    background-color: rgba(112, 79, 79, 0.75);
-    z-index: 1100;
-}
 
 .textArea {
     height: 200px;
@@ -214,6 +164,11 @@
 .tag-select {
     display: inline-flex;
     gap: 10px;
+
+    input[type="checkbox"]:checked {
+        accent-color: #ffc107;
+    }
+
 }
 
 .error {

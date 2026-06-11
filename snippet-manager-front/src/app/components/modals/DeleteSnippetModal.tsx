@@ -2,6 +2,7 @@ import { Button, CloseButton, Modal } from "react-bootstrap";
 import ReactModal from "react-modal";
 import { deleteSnippet } from "../../api/snippets-api";
 import { useNavigate } from "react-router";
+import SnippetView from "../views/SnippetView";
 
 export default function DeleteSnippetModal(props: any) {
 
@@ -20,18 +21,21 @@ export default function DeleteSnippetModal(props: any) {
     }
 
     return (
-        <ReactModal className="delete-modal" overlayClassName="delete-modal-overlay" isOpen={showModal} onRequestClose={() => setShowModal(false)}>
+        <ReactModal className="custom-modal" 
+        overlayClassName="custom-modal-overlay" 
+        isOpen={showModal} 
+        onRequestClose={() => setShowModal(false)}>
             <Modal.Header>
                 <Modal.Title>Are you sure to delete this snippet?</Modal.Title>
-                <CloseButton onClick={closeModal}></CloseButton>
+                <CloseButton onClick={closeModal} variant="white"></CloseButton>
             </Modal.Header>
             <Modal.Body>
                 <label>This action is impossible to revert!</label>
             </Modal.Body>
             <Modal.Footer>
                 <div style={{display:"inline-flex", gap: "1rem"}}>
-                    <Button variant="danger" onClick={handleDeleteSnippet}>Delete</Button>
-                    <Button variant="secondary" onClick={closeModal}>Cancel</Button>
+                    <Button variant="outline-danger" onClick={handleDeleteSnippet}>Delete</Button>
+                    <Button variant="outline-secondary" onClick={closeModal}>Cancel</Button>
                 </div>
             </Modal.Footer>
         </ReactModal>

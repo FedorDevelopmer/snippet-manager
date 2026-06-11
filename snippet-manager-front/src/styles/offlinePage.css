@@ -1,20 +1,23 @@
 .offlinePageLayout {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     gap: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #472D2D;
+    color: white;
 }
 
 .offlineImg {
     max-width: 25vh;
     max-height: 25vh;
+    color: #704F4F
 }
 
 .offlineLabel {
-    color: darkred;
+    color: #704F4F;
     font-size: large;
     font-weight: 200;
 

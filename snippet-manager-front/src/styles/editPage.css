@@ -1,11 +1,12 @@
-section{
+section {
     padding: 2rem;
 }
 
 .edit-page-header {
     font-size: x-large;
     font-weight: bold;
-    color: #0d6efd;
+    color: #ffc107;
+
 }
 
 .edit-page-form {
@@ -15,9 +16,39 @@ section{
     max-width: 90vw;
     text-align: start;
     gap: 1rem;
+
+    & input {
+
+        border: none;
+        box-shadow: none;
+        background-color: #553939;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 10px;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    & textarea {
+
+        border: none;
+        box-shadow: none;
+        background-color: #553939;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 10px;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
 }
 
-.footer-buttons{
+.footer-buttons {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -36,4 +67,10 @@ section{
 
 .edit-page {
     padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #472D2D;
+    color: white;
 }

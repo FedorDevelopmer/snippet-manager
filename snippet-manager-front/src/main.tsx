@@ -10,7 +10,7 @@ import OfflineViewComponent from './app/components/views/OfflineView.tsx'
 import MainMenu from './app/components/MainMenu.tsx'
 
 
-ReactModal.setAppElement('#root');
+
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Routes>
@@ -22,3 +22,4 @@ createRoot(document.getElementById('root')!).render(
     </Routes>
   </BrowserRouter>
 )
+ReactModal.setAppElement('#root');

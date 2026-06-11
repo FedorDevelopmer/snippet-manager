@@ -65,7 +65,7 @@ export default function AddButtonComponent(props: any) {
             <Card style={{ background: "#553939" }}>
                         <span className="add-button" onClick={openModal}>+</span>
             </Card>
-            <ReactModal className="modal" overlayClassName="modal-overlay" style={{ content: {}, overlay: {} }} isOpen={showModal} onRequestClose={() => setShowModal(false)}
+            <ReactModal className="custom-modal" overlayClassName="custom-modal-overlay" style={{ content: {}, overlay: {} }} isOpen={showModal} onRequestClose={() => setShowModal(false)}
                 shouldCloseOnOverlayClick={true}
                 shouldCloseOnEsc={true}>
                 <Modal.Header>

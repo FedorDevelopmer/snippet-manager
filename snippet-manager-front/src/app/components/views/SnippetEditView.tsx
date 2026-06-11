@@ -109,13 +109,13 @@ export default function SnippetEditView() {
                 >
                     <h2 className="edit-page-header">Edit your snippet</h2>
                     <form className="edit-page-form" onSubmit={handleSubmit(handleUpdateSnippet)}>
-                        <label htmlFor="title">Title:</label>
+                        <label htmlFor="title">Title</label>
                         <input id="title"  {...register("title")}></input>
                         {errors.title && <label className="error">{errors.title.message}</label>}
-                        <label htmlFor="code">Code:</label>
+                        <label htmlFor="code">Code</label>
                         <textarea id="code"  {...register("code")}></textarea>
                         {errors.code && <label className="error">{errors.code.message}</label>}
-                        <label htmlFor="language">Language:</label>
+                        <label htmlFor="language">Language</label>
                         <div id="language" className="language-selector">
                             <div
                                 className="selector-button"
@@ -136,8 +136,8 @@ export default function SnippetEditView() {
                             )}
                         </div>
                         <div className="footer-buttons">
-                            <Button variant="primary" type="submit">Save</Button>
-                            <Button variant="danger" type="button" onClick={toSnippetPage}>Discard</Button>
+                            <Button variant="outline-warning" type="submit">Save</Button>
+                            <Button variant="outline-danger" type="button" onClick={toSnippetPage}>Discard</Button>
                         </div>
                     </form>
                 </LoadingOverlay >

@@ -33,7 +33,7 @@ describe("AddButtonComponent", () => {
 
         const user = userEvent.setup();
 
-        const openBtn = screen.getByRole("button");
+        const openBtn = screen.getByText("+");
 
         await user.click(openBtn);
 
@@ -48,9 +48,9 @@ describe("AddButtonComponent", () => {
 
         const user = userEvent.setup();
 
-        await user.click(screen.getByRole("button"));
+        await user.click(screen.getByText("+"));
 
-        await user.click(screen.getByRole("button", { name: /create/i }));
+        await user.click(screen.getByRole("button", { name: /create/i, hidden: true}));
 
         expect(await screen.findByText("Code length must be at least 10 characters")).toBeInTheDocument();
         expect(await screen.findByText("Snippet title must be at list 3 characters")).toBeInTheDocument();
@@ -66,12 +66,12 @@ describe("AddButtonComponent", () => {
 
         const user = userEvent.setup();
 
-        await user.click(screen.getByRole("button"));
+        await user.click(screen.getByText("+"));
 
         await user.type(screen.getByLabelText("Title"), "My snippet");
         await user.type(screen.getByLabelText("Code"), "console.log(10)");
 
-        await user.click(screen.getByRole("button", { name: /create/i }));
+        await user.click(screen.getByRole("button", { name: /create/i, hidden: true}));
 
         expect(addSnippet).toHaveBeenCalledWith(
             expect.objectContaining({
