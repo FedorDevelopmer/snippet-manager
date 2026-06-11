@@ -31,11 +31,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "22"
 
       - name: Prepare deps
         working-directory: snippet-manager-front
-        run: npm install
+        run: npm ci
         
       - name: Frontend tests
         working-directory: snippet-manager-front
