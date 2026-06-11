@@ -2,7 +2,6 @@ import { Button, CloseButton, Modal } from "react-bootstrap";
 import ReactModal from "react-modal";
 import { deleteSnippet } from "../../api/snippets-api";
 import { useNavigate } from "react-router";
-import SnippetView from "../views/SnippetView";
 
 export default function DeleteSnippetModal(props: any) {
 
