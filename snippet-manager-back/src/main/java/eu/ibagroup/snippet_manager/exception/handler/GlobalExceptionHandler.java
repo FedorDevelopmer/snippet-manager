@@ -7,13 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static org.springframework.http.ResponseEntity.internalServerError;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleServerError(Exception e) {
         e.printStackTrace();
-        return ResponseEntity.internalServerError().body("Internal server error: " + e.getCause().getMessage());
+        if (e.getCause() == null){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+        return internalServerError().body("Internal server error: " + e.getCause().getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

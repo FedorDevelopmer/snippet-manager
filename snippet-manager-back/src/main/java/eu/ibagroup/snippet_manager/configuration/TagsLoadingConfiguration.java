@@ -3,7 +3,6 @@ package eu.ibagroup.snippet_manager.configuration;
 import eu.ibagroup.snippet_manager.dto.LangTagRequestTO;
 import eu.ibagroup.snippet_manager.entity.LangTag;
 import eu.ibagroup.snippet_manager.enumeration.DevLang;
-import eu.ibagroup.snippet_manager.exception.DuplicateLangTagException;
 import eu.ibagroup.snippet_manager.repository.LangTagRepository;
 import eu.ibagroup.snippet_manager.service.LangTagService;
 import jakarta.annotation.PostConstruct;
@@ -34,8 +33,12 @@ public class TagsLoadingConfiguration {
             String name = val.getLanguageName();
             LangTagRequestTO requestTO = new LangTagRequestTO();
             requestTO.setLanguage(name);
-            int colorInt = random.nextInt(100_000, 999_999);
-            requestTO.setColor("#" + colorInt);
+            long colorInt = 0;
+            for(int i = 0; i < 3; i++){
+                colorInt = (colorInt << 8) + random.nextInt(0, 255);
+
+            }
+            requestTO.setColor("#" + Long.toHexString(colorInt));
             Optional<LangTag> existingLangTag = langTagRepository.findByLanguage(DevLang.fromLanguage(requestTO.getLanguage()));
             if(existingLangTag.isEmpty()){
                 langTagService.createLangTag(requestTO);

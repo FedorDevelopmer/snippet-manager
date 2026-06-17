@@ -106,7 +106,7 @@ public class SnippetBusinessLogicTest {
         Assertions.assertThrows(
                 DuplicateSnippetException.class,
                 () -> snippetService.createSnippet(
-                        new SnippetRequestTO(UUID.randomUUID(), "title", "code", "JAVA", LocalDateTime.now())
+                        new SnippetRequestTO("title", "code", "JAVA")
                 )
         );
 
@@ -119,7 +119,7 @@ public class SnippetBusinessLogicTest {
         Mockito.when(snippetMapper.toSnippet(any(SnippetRequestTO.class))).thenReturn(new Snippet());
 
         snippetService.createSnippet(
-                new SnippetRequestTO(UUID.randomUUID(), "title", "code", "JAVA", LocalDateTime.now())
+                new SnippetRequestTO("title", "code", "JAVA")
         );
 
         Mockito.verify(snippetRepository).save(any(Snippet.class));
@@ -129,7 +129,7 @@ public class SnippetBusinessLogicTest {
 
     @Test
     void whenSnippetIsEmpty_ThenValidationFails() {
-        SnippetRequestTO request = new SnippetRequestTO(UUID.randomUUID(), "", "", "JAVA", LocalDateTime.now());
+        SnippetRequestTO request = new SnippetRequestTO("", "", "JAVA");
 
         Set<ConstraintViolation<SnippetRequestTO>> violations = validator.validate(request);
 
@@ -140,7 +140,7 @@ public class SnippetBusinessLogicTest {
     void whenCodeTooLong_ThenValidationFails() {
         String longCode = "a".repeat(10001);
 
-        SnippetRequestTO request = new SnippetRequestTO(UUID.randomUUID(), "title", longCode, "JAVA", LocalDateTime.now());
+        SnippetRequestTO request = new SnippetRequestTO("title", longCode, "JAVA");
 
         Set<ConstraintViolation<SnippetRequestTO>> violations = validator.validate(request);
 

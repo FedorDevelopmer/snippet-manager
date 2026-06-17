@@ -7,6 +7,9 @@ import eu.ibagroup.snippet_manager.entity.Snippet;
 import eu.ibagroup.snippet_manager.mapper.SnippetMapper;
 import eu.ibagroup.snippet_manager.service.SnippetService;
 import eu.ibagroup.snippet_manager.specification.criteria.SnippetSearchCriteria;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/snippets")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD})
 public class SnippetController {
@@ -41,7 +44,7 @@ public class SnippetController {
     @GetMapping
     public ResponseEntity<Page<SnippetResponseTO>> getSnippets(@RequestParam(defaultValue = "0") Integer pageNumber,
                                                                @RequestParam(defaultValue = "15") Integer size,
-                                                               @ModelAttribute SnippetSearchCriteria criteria) {
+                                                               @ModelAttribute @Nullable SnippetSearchCriteria criteria) {
         return new ResponseEntity<>(snippetService.getAllSnippets(pageNumber, size, criteria), HttpStatus.OK);
     }
 

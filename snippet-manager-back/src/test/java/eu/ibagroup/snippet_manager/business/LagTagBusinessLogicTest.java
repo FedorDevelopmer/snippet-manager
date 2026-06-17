@@ -60,14 +60,14 @@ public class LagTagBusinessLogicTest {
     //check color column constraints
     @Test
     void whenColorFieldIsEmpty_ThenThrowException() {
-        LangTagRequestTO langTagRequestTO = new LangTagRequestTO(UUID.randomUUID(), "Text", "");
+        LangTagRequestTO langTagRequestTO = new LangTagRequestTO("Text", "");
         Set<ConstraintViolation<LangTagRequestTO>> violations = validator.validate(langTagRequestTO);
         Assertions.assertFalse(violations.isEmpty());
     }
 
     @Test
     void whenColorFieldIsTooShort_ThenThrowException() {
-        LangTagRequestTO langTagRequestTO = new LangTagRequestTO(UUID.randomUUID(), "Text", "#FFFF");
+        LangTagRequestTO langTagRequestTO = new LangTagRequestTO("Text", "#FFFF");
         Set<ConstraintViolation<LangTagRequestTO>> violations = validator.validate(langTagRequestTO);
         Assertions.assertFalse(violations.isEmpty());
     }
@@ -75,7 +75,7 @@ public class LagTagBusinessLogicTest {
     //ensure tag with same language cannot be created
     @Test
     void whenTagWithLangExists_ThenSameLangTagThrowException() {
-        LangTagRequestTO langTagRequestTO = new LangTagRequestTO(UUID.randomUUID(), "Text", "#111111");
+        LangTagRequestTO langTagRequestTO = new LangTagRequestTO("Text", "#111111");
         LangTag langTag = new LangTag(UUID.randomUUID(), DevLang.TEXT, "#111111");
         Mockito.when(langTagRepository.findByLanguage(any(DevLang.class))).thenReturn(Optional.of(langTag));
         Assertions.assertThrows(DuplicateLangTagException.class, () -> {
@@ -87,7 +87,7 @@ public class LagTagBusinessLogicTest {
 
     @Test
     void whenValidLangTagCreate_ThenSavedSuccessfully() {
-        LangTagRequestTO request = new LangTagRequestTO(UUID.randomUUID(), "Text", "#111111");
+        LangTagRequestTO request = new LangTagRequestTO("Text", "#111111");
 
         Mockito.when(langTagMapper.toLangTag(any())).thenReturn(new LangTag());
         Mockito.when(langTagRepository.findByLanguage(any(DevLang.class))).thenReturn(Optional.empty());

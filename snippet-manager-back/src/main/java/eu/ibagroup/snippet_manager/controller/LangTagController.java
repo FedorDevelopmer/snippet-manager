@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/tags")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD})
 public class LangTagController {
@@ -34,36 +34,42 @@ public class LangTagController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<LangTagResponseTO> getTagById(@PathVariable UUID id) {
         LangTag langTag = langTagService.findLangTagById(id);
         return new ResponseEntity<>(langTagMapper.toLangTagResponse(langTag), HttpStatus.OK);
     }
 
     @GetMapping("/name")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<LangTagResponseTO> getTagByName(@RequestParam String name) {
         LangTag langTag = langTagService.findLangTagByLanguage(DevLang.fromLanguage(name));
         return new ResponseEntity<>(langTagMapper.toLangTagResponse(langTag), HttpStatus.OK);
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<LangTagResponseTO>> getTags(@RequestParam(defaultValue = "0") Integer pageNumber,
                                                            @RequestParam(defaultValue = "15") Integer size) {
         return new ResponseEntity<>(langTagService.getAllLangTags(pageNumber, size), HttpStatus.OK);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<LangTagResponseTO> createTag(@Valid @RequestBody LangTagRequestTO langTagRequestTO) {
         LangTag savedlangTag = langTagService.createLangTag(langTagRequestTO);
         return new ResponseEntity<>(langTagMapper.toLangTagResponse(savedlangTag), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<LangTagResponseTO> updateTag(@PathVariable UUID id, @Valid @RequestBody LangTagUpdateTO langTagUpdateTO) {
         LangTag updatedLangTag = langTagService.updateLangTag(id, langTagUpdateTO);
         return new ResponseEntity<>(langTagMapper.toLangTagResponse(updatedLangTag), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteTag(@PathVariable UUID id) {
         langTagService.deleteLangTag(id);
         return ResponseEntity.noContent().build();

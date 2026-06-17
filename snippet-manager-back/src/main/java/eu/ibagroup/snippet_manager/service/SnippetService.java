@@ -43,7 +43,7 @@ public class SnippetService {
     @Transactional
     public Page<SnippetResponseTO> getAllSnippets(int pageNumber, int pageSize, SnippetSearchCriteria criteria) {
         Page<Snippet> snippets;
-        if(criteria.isEmpty()){
+        if(criteria == null || criteria.isEmpty()){
             snippets = snippetRepository.findAll(PageRequest.of(pageNumber, pageSize));
         } else {
             SnippetSpecification spec = new SnippetSpecification(criteria);
