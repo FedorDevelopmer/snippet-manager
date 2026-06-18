@@ -6,6 +6,7 @@ import eu.ibagroup.snippet_manager.dto.LangTagUpdateTO;
 import eu.ibagroup.snippet_manager.entity.LangTag;
 import eu.ibagroup.snippet_manager.enumeration.DevLang;
 import eu.ibagroup.snippet_manager.exception.LangTagNotFoundException;
+import eu.ibagroup.snippet_manager.mapper.LangTagMapper;
 import eu.ibagroup.snippet_manager.repository.LangTagRepository;
 import eu.ibagroup.snippet_manager.service.LangTagService;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ public class LangTagServiceTest {
     @Mock
     private LangTagRepository langTagRepository;
 
+    @Mock
+    private LangTagMapper langTagMapper;
+
     @InjectMocks
     private LangTagService langTagService;
 
@@ -42,7 +46,7 @@ public class LangTagServiceTest {
         langTagRequestTO.setColor("#111111");
         langTagRequestTO.setLanguage("java");
 
-        when(langTagRepository.save(any())).thenReturn(langTag);
+        when(langTagRepository.save(langTagMapper.toLangTag(any()))).thenReturn(langTag);
 
         LangTag savedLangTag = langTagService.createLangTag(langTagRequestTO);
 
