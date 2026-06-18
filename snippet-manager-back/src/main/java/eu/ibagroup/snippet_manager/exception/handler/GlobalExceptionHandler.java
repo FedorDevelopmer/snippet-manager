@@ -4,6 +4,7 @@ import eu.ibagroup.snippet_manager.exception.LangTagNotFoundException;
 import eu.ibagroup.snippet_manager.exception.SnippetNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,7 +15,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleServerError(Exception e) {
-        e.printStackTrace();
         if (e.getCause() == null){
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
@@ -23,7 +23,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e) {
-        e.printStackTrace();
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleNotValidMethodArgument(MethodArgumentNotValidException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 

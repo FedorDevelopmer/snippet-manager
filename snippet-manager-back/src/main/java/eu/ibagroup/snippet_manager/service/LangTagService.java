@@ -86,7 +86,7 @@ public class LangTagService {
             existingLangTag.setColor(langTagUpdateTO.getColor());
         }
         if(langTagUpdateTO.getLanguage() != null){
-            DevLang devLang = DevLang.valueOf(langTagUpdateTO.getLanguage().toUpperCase());
+            DevLang devLang = DevLang.fromLanguage(langTagUpdateTO.getLanguage());
             existingLangTag.setLanguage(devLang);
         }
         return existingLangTag;

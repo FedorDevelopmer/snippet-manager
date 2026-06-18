@@ -1,4 +1,4 @@
-package eu.ibagroup.snippet_manager.unit_test;
+package eu.ibagroup.snippet_manager.unit;
 
 import eu.ibagroup.snippet_manager.dto.SnippetRequestTO;
 import eu.ibagroup.snippet_manager.dto.SnippetUpdateTO;
