@@ -1,4 +1,4 @@
-name: Snippet Manager Preparation
+name: Snippet Manager
 on:
   push:
     branches: [ "main" ]
@@ -14,15 +14,11 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Run tests
+      - name: Backend Build & Run Tests
         working-directory: snippet-manager-back
         run: |
           chmod +x mvnw
-          ./mvnw test
-
-      - name: Backend build
-        working-directory: snippet-manager-back
-        run: ./mvnw clean install
+          ./mvnw clean test package
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -32,15 +28,34 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: "npm"
+          cache-dependency-path: snippet-manager-front/package-lock.json
 
-      - name: Prepare deps
+      - name: Prepare Dependencies
         working-directory: snippet-manager-front
         run: npm ci
-        
-      - name: Frontend tests
+
+      - name: Frontend Tests
         working-directory: snippet-manager-front
         run: npm run test
 
-      - name: Frontend build
+      - name: Frontend Build
         working-directory: snippet-manager-front
         run: npm run build
+
+  build-docker:
+    needs: [build-backend, build-frontend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frontend Build Docker
+        working-directory: snippet-manager-front
+        run: docker build -t snippet-manager-frontend:1.1 .
+
+      - name: Backend Build Docker
+        working-directory: snippet-manager-back
+        run: docker build -t snippet-manager-backend:1.0 .
+
+      - name: List images
+        run: docker images
