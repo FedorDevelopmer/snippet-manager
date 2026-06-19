@@ -29,11 +29,12 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
+          cache-dependency-path: snippet-manager-front/package-lock.json
 
       - name: Prepare Dependencies
         working-directory: snippet-manager-front
         run: npm ci
-        
+
       - name: Frontend Tests
         working-directory: snippet-manager-front
         run: npm run test
