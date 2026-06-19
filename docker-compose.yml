@@ -1,0 +1,29 @@
+services:
+  snippet-manager-back:
+    container_name: snippet-manager-backend
+    image: snippet-manager-backend:1.0
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./data
+        target: /app/data
+    ports:
+      - "9091:9091"
+    networks:
+      - snippet-network
+
+  snippet-manager-front:
+    container_name: snippet-manager-frontend
+    image: snippet-manager-frontend:1.1
+    restart: unless-stopped
+    depends_on:
+      - snippet-manager-back
+    ports:
+      - "7000:80"
+    networks:
+      - snippet-network
+
+networks:
+ snippet-network:
+
+
